@@ -1,6 +1,8 @@
 require_relative "node"
 
 class Tree
+  attr_accessor :root
+
   def initialize(array)
     @last = array.uniq.length - 1
     @root = build_tree(array)
@@ -35,11 +37,35 @@ class Tree
     end
     root
   end
+
+  def get_successor(curr)
+    curr = curr.right
+    curr = curr.left while !curr.nil? && !curr.left.nil?
+    curr
+  end
+
+  def delete(root = @root, value)
+    return root if root.nil?
+
+    if root.root > value
+      root.left = delete(root.left, value)
+    elsif root.root < value
+      root.right = delete(root.right, value)
+    else
+      return root.right if root.left.nil?
+      return root.left if root.right.nil?
+
+      succ = get_successor(root)
+      root.root = succ.root
+      root.right = delete(root.right, succ.root)
+    end
+    root
+  end
 end
 
 array = (Array.new(15) { rand(1..100) })
-tree = Tree.new(array)
+arr = [10, 60, 20, 1, 3, 5, 1]
+tree = Tree.new(arr)
 tree.pretty_print
-
-tree.insert(5)
-p tree.pretty_print
+tree.delete(tree.root, 20)
+tree.pretty_print
