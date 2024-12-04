@@ -23,8 +23,23 @@ class Tree
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.root}"
     pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
   end
+
+  def insert(root = @root, value)
+    return Node.new(value) if root.nil?
+    return root if root.root == value
+
+    if value < root.root
+      root.left = insert(root.left, value)
+    elsif value > root.root
+      root.right = insert(root.right, value)
+    end
+    root
+  end
 end
 
 array = (Array.new(15) { rand(1..100) })
 tree = Tree.new(array)
 tree.pretty_print
+
+tree.insert(5)
+p tree.pretty_print
