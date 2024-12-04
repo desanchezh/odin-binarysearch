@@ -1,4 +1,4 @@
-require_relative "node"
+require_relative 'node'
 
 class Tree
   attr_accessor :root
@@ -6,6 +6,7 @@ class Tree
   def initialize(array)
     @last = array.uniq.length - 1
     @root = build_tree(array)
+    @found = []
   end
 
   def build_tree(array, first = 0, last = @last)
@@ -20,7 +21,7 @@ class Tree
     root
   end
 
-  def pretty_print(node = @root, prefix = "", is_left = true)
+  def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.root}"
     pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
@@ -61,11 +62,21 @@ class Tree
     end
     root
   end
+
+  def find(value, root = @root)
+    return if root.nil?
+
+    @found << root if root.root == value
+    find(value, root.left)
+    find(value, root.right)
+    @found
+  end
 end
 
 array = (Array.new(15) { rand(1..100) })
 arr = [10, 60, 20, 1, 3, 5, 1]
 tree = Tree.new(arr)
 tree.pretty_print
-tree.delete(tree.root, 20)
+p tree.find(60)
 tree.pretty_print
+p
