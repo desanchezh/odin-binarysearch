@@ -7,6 +7,7 @@ class Tree
     @last = array.uniq.length - 1
     @root = build_tree(array)
     @found = []
+    @preorder_arr = []
   end
 
   def build_tree(array, first = 0, last = @last)
@@ -90,6 +91,45 @@ class Tree
     end
     visited_values
   end
+
+  def inorder(root = @root, arr = [], &my_block)
+    return if root.nil?
+
+    inorder(root.left, arr)
+    if block_given?
+      arr << root.root if my_block.call
+    else
+      arr << root.root
+    end
+    inorder(root.right, arr)
+    arr
+  end
+
+  def preorder(root = @root, arr = [], &my_block)
+    return if root.nil?
+
+    if block_given?
+      arr << root.root if my_block.call
+    else
+      arr << root.root
+    end
+    preorder(root.left, arr)
+    preorder(root.right, arr)
+    arr
+  end
+
+  def postorder(root = @root, arr = [], &my_block)
+    return if root.nil?
+
+    postorder(root.left, arr)
+    postorder(root.right, arr)
+    if block_given?
+      arr << root.root if my_block.call
+    else
+      arr << root.root
+    end
+    arr
+  end
 end
 
 array = (Array.new(15) { rand(1..100) })
@@ -97,4 +137,7 @@ arr = [10, 60, 20, 1, 3, 5, 1]
 tree = Tree.new(array)
 tree.pretty_print
 tree.find(60)
-p tree.level_order
+tree.level_order
+p tree.preorder
+p tree.inorder
+p tree.postorder
