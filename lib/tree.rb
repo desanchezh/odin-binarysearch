@@ -71,12 +71,30 @@ class Tree
     find(value, root.right)
     @found
   end
+
+  def level_order(root = @root, &my_block)
+    return if root.nil?
+
+    queue = []
+    visited_values = []
+    queue.push(root)
+    until queue.empty?
+      current = queue.shift
+      if block_given?
+        visited_values.push(current.root) if my_block.call
+      else
+        visited_values.push(current.root)
+      end
+      queue.push(current.left) unless current.left.nil?
+      queue.push(current.right) unless current.right.nil?
+    end
+    visited_values
+  end
 end
 
 array = (Array.new(15) { rand(1..100) })
 arr = [10, 60, 20, 1, 3, 5, 1]
-tree = Tree.new(arr)
+tree = Tree.new(array)
 tree.pretty_print
-p tree.find(60)
-tree.pretty_print
-p
+tree.find(60)
+p tree.level_order
