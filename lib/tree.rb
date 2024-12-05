@@ -6,7 +6,7 @@ class Tree
   def initialize(array)
     @last = array.uniq.length - 1
     @root = build_tree(array)
-    @found = []
+    @found = nil
     @preorder_arr = []
   end
 
@@ -67,7 +67,7 @@ class Tree
   def find(value, root = @root)
     return if root.nil?
 
-    @found << root if root.root == value
+    @found = root if root.root == value
     find(value, root.left)
     find(value, root.right)
     @found
@@ -130,14 +130,25 @@ class Tree
     end
     arr
   end
+
+  def height(node, height = [], counter = 0)
+    return if node.nil?
+
+    unless node.left.nil? && node.right.nil?
+      counter += 1
+      height << counter
+    end
+    height(node.right, height, counter)
+    height(node.left, height, counter)
+    height.max
+  end
 end
 
 array = (Array.new(15) { rand(1..100) })
-arr = [10, 60, 20, 1, 3, 5, 1]
-tree = Tree.new(array)
+arr = [10, 60, 20, 1, 3, 5, 1, 111, 4, 125, 44, 555, 11, 12, 53, 26, 93, 29]
+tree = Tree.new(arr)
 tree.pretty_print
 tree.find(60)
 tree.level_order
-p tree.preorder
-p tree.inorder
-p tree.postorder
+
+p tree.height(tree.find(26))
