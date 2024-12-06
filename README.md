@@ -1,2 +1,2 @@
 # odin-binarysearch
-Binary search project for The Odin Project
+Binary Search Tree project for The Odin Project
