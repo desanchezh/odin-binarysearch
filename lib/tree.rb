@@ -132,7 +132,7 @@ class Tree
   end
 
   def height(node, height = [], counter = 0)
-    return if node.nil?
+    return 0 if node.nil?
 
     unless node.left.nil? && node.right.nil?
       counter += 1
@@ -140,7 +140,7 @@ class Tree
     end
     height(node.right, height, counter)
     height(node.left, height, counter)
-    height.max
+    height.max.nil? ? 0 : height.max
   end
 
   def depth(node, root = @root)
@@ -159,5 +159,5 @@ tree = Tree.new(arr)
 tree.pretty_print
 tree.find(60)
 tree.level_order
-
+p tree.height(tree.find(44))
 p tree.depth(tree.find(11))
