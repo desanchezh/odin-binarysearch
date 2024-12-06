@@ -152,12 +152,26 @@ class Tree
     end
     dist
   end
+
+  def balanced?(root = @root)
+    return if root.nil?
+
+    left_height = height(root.left)
+    right_height = height(root.right)
+
+    return false if (left_height - right_height).abs > 1
+
+    balanced?(root.left)
+    balanced?(root.right)
+    true
+  end
+
+  def rebalance(root = @root)
+    sorted_arr = inorder(root)
+    @root = build_tree(sorted_arr)
+  end
 end
+
 array = (Array.new(15) { rand(1..100) })
 arr = [10, 60, 20, 1, 3, 5, 1, 111, 4, 125, 44, 555, 11, 12, 53, 26, 93, 29]
 tree = Tree.new(arr)
-tree.pretty_print
-tree.find(60)
-tree.level_order
-p tree.height(tree.find(44))
-p tree.depth(tree.find(11))
