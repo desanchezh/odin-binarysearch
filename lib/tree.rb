@@ -142,8 +142,17 @@ class Tree
     height(node.left, height, counter)
     height.max
   end
-end
 
+  def depth(node, root = @root)
+    return -1 if root.nil?
+
+    dist = -1
+    if root.root == node.root || (dist = depth(node, root.left)) >= 0 || (dist = depth(node, root.right)) >= 0
+      dist += 1
+    end
+    dist
+  end
+end
 array = (Array.new(15) { rand(1..100) })
 arr = [10, 60, 20, 1, 3, 5, 1, 111, 4, 125, 44, 555, 11, 12, 53, 26, 93, 29]
 tree = Tree.new(arr)
@@ -151,4 +160,4 @@ tree.pretty_print
 tree.find(60)
 tree.level_order
 
-p tree.height(tree.find(26))
+p tree.depth(tree.find(11))
