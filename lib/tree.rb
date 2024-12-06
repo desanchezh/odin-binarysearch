@@ -7,7 +7,6 @@ class Tree
     @last = array.uniq.length - 1
     @root = build_tree(array)
     @found = nil
-    @preorder_arr = []
   end
 
   def build_tree(array, first = 0, last = @last)
@@ -168,10 +167,7 @@ class Tree
 
   def rebalance(root = @root)
     sorted_arr = inorder(root)
+    @last = sorted_arr.uniq.length - 1
     @root = build_tree(sorted_arr)
   end
 end
-
-array = (Array.new(15) { rand(1..100) })
-arr = [10, 60, 20, 1, 3, 5, 1, 111, 4, 125, 44, 555, 11, 12, 53, 26, 93, 29]
-tree = Tree.new(arr)

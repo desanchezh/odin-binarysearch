@@ -6,10 +6,10 @@ tree = Tree.new(array)
 puts "Is tree balanced?: #{tree.balanced?}"
 tree.pretty_print
 # Print out all elements in level, pre, post, and in order
-puts tree.level_order
-puts tree.preorder
-puts tree.postorder
-puts tree.inorder
+p tree.level_order
+p tree.preorder
+p tree.postorder
+p tree.inorder
 
 # Unbalance the tree by adding several numbers > 100
 tree.insert(1900)
@@ -27,7 +27,7 @@ puts "Is tree balanced?: #{tree.balanced?}"
 tree.pretty_print
 
 # Print out all elements in level, pre, post, and in order.
-puts tree.level_order
-puts tree.preorder
-puts tree.postorder
-puts tree.inorder
+p tree.level_order
+p tree.preorder
+p tree.postorder
+p tree.inorder
